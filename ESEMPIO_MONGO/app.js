@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var moviesRouter= require('./routes/movies');
 
 var app = express();
 
@@ -14,11 +14,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+app.use('/', indexRouter);
+app.use('/movies', moviesRouter);
+app.get('/movies', function(req, res) {
+  res.sendFile(path.join(__dirname,'/routes/movies.js'));
 });
+app.listen(3000,function(){
+    console.log('Exemple app listening on port 3000');
+})
 
 module.exports = app;
